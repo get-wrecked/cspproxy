@@ -39,4 +39,19 @@ describe('CSSProxy test', function() {
         assert.equal(await response.text(), "Mocked response");
         assert.equal(response.headers.get('Content-Security-Policy'), undefined);
     });
+
+    it('customizes the origin header', async function () {
+        context.REPLACEMENTS = '{"*.otherexample.com": "example.com"}';
+        context.ORIGIN = 'foo.example.com';
+        nock('https://example.com', {reqheaders: {'Origin': 'foo.example.com'}})
+            .get('/')
+            .reply(200, 'Mocked response', {
+                'Content-Security-Policy': "default-src https: 'self' *.otherexample.com",
+            });
+
+        const request = new Request(new URL('https://example.com'));
+        const response = await handleRequest(request);
+        assert.equal(await response.text(), "Mocked response");
+        assert.equal(response.headers.get('Content-Security-Policy'), "default-src https: 'self' example.com");
+    });
 });

@@ -6,17 +6,23 @@ addEventListener('fetch', event => {
 
 async function handleRequest(request) {
     const replacements = JSON.parse(REPLACEMENTS);
-    const response = await fetch(request);
+    // Rewrite origin
+    const newRequestHeaders = {};
+    if (typeof ORIGIN !== 'undefined') {
+        newRequestHeaders.origin = ORIGIN;
+    }
+    const newRequest = new Request(request, {headers: newRequestHeaders});
+    const response = await fetch(newRequest);
     const csp = response.headers.get('content-security-policy');
     if (!csp) {
         // No CSP policy, ignore
         return response;
     }
     const newCsp = replaceDomainInCsp(csp, replacements);
-    const newHeaders = new Headers(response.headers);
-    newHeaders.set('content-security-policy', newCsp);
+    const newResponseHeaders = new Headers(response.headers);
+    newResponseHeaders.set('content-security-policy', newCsp);
     return new Response(await response.text(), {
-        headers: newHeaders,
+        headers: newResponseHeaders,
     });
 }
 
