@@ -28,4 +28,15 @@ describe('CSSProxy test', function() {
         assert.equal(await response.text(), "Mocked response");
         assert.equal(response.headers.get('Content-Security-Policy'), "default-src https: 'self' example.com; font-src 'self' example.com");
     });
+
+    it('ignores upstreams without a csp', async function () {
+        nock('https://example.com')
+            .get('/')
+            .reply(200, 'Mocked response');
+
+        const request = new Request(new URL('https://example.com'));
+        const response = await handleRequest(request);
+        assert.equal(await response.text(), "Mocked response");
+        assert.equal(response.headers.get('Content-Security-Policy'), undefined);
+    });
 });

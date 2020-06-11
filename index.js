@@ -10,8 +10,7 @@ async function handleRequest(request) {
     const csp = response.headers.get('content-security-policy');
     if (!csp) {
         // No CSP policy, ignore
-        console.log(`no CSP policy for ${request.url}, ignoring`);
-        return fetch(request);
+        return response;
     }
     const newCsp = replaceDomainInCsp(csp, replacements);
     const newHeaders = new Headers(response.headers);
