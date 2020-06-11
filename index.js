@@ -7,9 +7,9 @@ addEventListener('fetch', event => {
 async function handleRequest(request) {
     const replacements = JSON.parse(REPLACEMENTS);
     // Rewrite origin
-    const newRequestHeaders = {};
-    if (typeof ORIGIN !== 'undefined') {
-        newRequestHeaders.origin = ORIGIN;
+    const newRequestHeaders = new Headers(request.headers);
+    if (request.method === 'POST' && typeof ORIGIN !== 'undefined') {
+        newRequestHeaders.set('origin', ORIGIN);
     }
     const newRequest = new Request(request, {headers: newRequestHeaders});
     const response = await fetch(newRequest);
