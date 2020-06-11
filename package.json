@@ -5,12 +5,16 @@
   "description": "A template for kick starting a Cloudflare Workers project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "format": "prettier --write '**/*.{js,css,json,md}'"
   },
   "author": "Tarjei Husøy <git@thusoy.com>",
   "license": "MIT",
   "devDependencies": {
+    "@dollarshaveclub/cloudworker": "^0.1.2",
+    "assert": "^2.0.0",
+    "mocha": "^8.0.1",
+    "nock": "^12.0.3",
     "prettier": "^1.18.2"
   }
 }
