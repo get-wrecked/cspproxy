@@ -1,16 +1,9 @@
-# 👷 `worker-template` Hello World
+# CSP Proxy
 
-A template for kick starting a Cloudflare worker project.
+A simple Cloudflare Worker to replace CSP headers sent by the upstream.
 
-[`index.js`](https://github.com/cloudflare/worker-template/blob/master/index.js) is the content of the Workers script.
-
-
-#### Wrangler
-
-To generate using [wrangler](https://github.com/cloudflare/wrangler)
+Needs to be configured with a environemt variable `REPLACEMENTS` that defines the replacements to be made:
 
 ```
-wrangler generate projectname https://github.com/cloudflare/worker-template
+REPLACEMENTS='{"*.example.com": "worker.domain.com"}'
 ```
-
-Further documentation for Wrangler can be found [here](https://developers.cloudflare.com/workers/tooling/wrangler).
