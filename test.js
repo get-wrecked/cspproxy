@@ -50,7 +50,7 @@ describe('CSSProxy test', function() {
                 },
             })
             .post('/')
-            .reply(200, 'Mocked response', {
+            .reply(304, '', {
                 'Content-Security-Policy': "default-src https: 'self' *.otherexample.com",
             });
 
@@ -61,7 +61,8 @@ describe('CSSProxy test', function() {
             },
         });
         const response = await handleRequest(request);
-        assert.equal(await response.text(), "Mocked response");
+        assert.equal(response.status, 304);
+        assert.equal(await response.text(), "");
         assert.equal(response.headers.get('Content-Security-Policy'), "default-src https: 'self' example.com");
     });
 });

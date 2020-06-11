@@ -21,8 +21,10 @@ async function handleRequest(request) {
     const newCsp = replaceDomainInCsp(csp, replacements);
     const newResponseHeaders = new Headers(response.headers);
     newResponseHeaders.set('content-security-policy', newCsp);
-    return new Response(await response.text(), {
+    return new Response(response.body, {
         headers: newResponseHeaders,
+        status: response.status,
+        statusText: response.statusText,
     });
 }
 
