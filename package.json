@@ -2,14 +2,14 @@
   "private": true,
   "name": "cspproxy",
   "version": "1.0.0",
-  "description": "A template for kick starting a Cloudflare Workers project",
+  "description": "A Cloudflare worker for rewriting CSP headers",
   "main": "index.js",
   "scripts": {
     "test": "mocha",
     "format": "prettier --write '**/*.{js,css,json,md}'"
   },
   "author": "Tarjei Husøy <git@thusoy.com>",
-  "license": "MIT",
+  "license": "Hippocratic-2.1",
   "devDependencies": {
     "@dollarshaveclub/cloudworker": "^0.1.2",
     "assert": "^2.0.0",
